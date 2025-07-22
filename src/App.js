@@ -14,8 +14,13 @@ function App() {
   const [todo, setTodo] = useState("");
 
   const getTasks = async () => {
-    const response = await api.get("/tasks");
-    setTodoList(response.data.data);
+    try {
+      const response = await api.get("/tasks");
+      setTodoList(response.data.data);
+    } catch (error) {
+      console.error("Failed to fetch tasks:", error);
+      setTodoList([]);
+    }
   }
 
   const addTask = async () => {

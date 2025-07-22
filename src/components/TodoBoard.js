@@ -5,7 +5,7 @@ const TodoBoard = ({ todoList, updateTask , deleteTask}) => {
   return (
     <div>
       <h2>To Do List</h2>
-      {todoList.length > 0 ? (
+      {todoList && todoList.length > 0 ? (
         todoList.map((item) => (
           <TodoItem key={item._id} item={item} updateTask={updateTask} deleteTask={deleteTask} />
         ))
