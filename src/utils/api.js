@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: `api`,
-  headers: {
+  baseURL: `http://localhost:5000/api`,
+  headers: {  
     "Content-Type": "application/json",
   },
 });
@@ -25,8 +25,12 @@ api.interceptors.response.use(
     return response;
   },
   function (error) {
-    error = error.response.data;
-    console.log("RESPONSE ERROR", error);
+    if (error.response && error.response.data) {
+      if (typeof error.response.data === 'object' && error.response.data.message) {
+        return Promise.reject(new Error(error.response.data.message));
+      }
+      return Promise.reject(error.response.data);
+    }
     return Promise.reject(error);
   }
 );
